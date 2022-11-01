@@ -29,7 +29,7 @@ if (selected == 'Spam Mail'):
     with col1:
         Message = st.text_input('Enter Your Mail')
     
-    mail_spam= ""
+mail_spam= ""
     
 if st.button('Spam Mail Result'):
     spam_prediction= spam_mail.predict([[Message]])
