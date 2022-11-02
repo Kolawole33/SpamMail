@@ -50,7 +50,7 @@ if (selected == 'Spam Mail Prediction System'):
     spam_mail_= ""
     
     if st.button('Mail Result'):
-      Spam_Mail_Prediction= spam_mail.predict([[Mess]])
+      Spam_Mail_Prediction= spam_mail.predict([Mess])
       
       if (Spam_Mail_Prediction[0]==1):
           spam_mail_="This Mail is Spam"
