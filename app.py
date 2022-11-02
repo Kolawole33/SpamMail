@@ -23,14 +23,14 @@ port_stem= PorterStemmer()
 
 
 def pred_spam(content):
-    #stemmed_content= content.lower()
-    stemmed_content= content.split()
-    stemmed_content=[port_stem.stem(word) for word in stemmed_content if not word in stopwords.words("english")]
-    stemmed_content=" ".join(stemmed_content)
+    content= content.lower()
+    content= content.split()
+    content=[port_stem.stem(word) for word in content if not word in stopwords.words("english")]
+    content=" ".join(content)
     
-    stemmed_content= feature_extraction.fit_transform(stemmed_content).toarray()
+    stemmed_content= feature_extraction.transform(content).toarray()
 
-    prediction=spam_mail.predict(stemmed_content)
+    prediction= spam_mail.predict(stemmed_content)
     
     if (prediction[0] == 0):
        return " This Not Spam Mail"
