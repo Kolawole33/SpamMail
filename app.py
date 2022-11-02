@@ -9,11 +9,6 @@ import streamlit as st
 import pickle
 from streamlit_option_menu import option_menu
 from sklearn.feature_extraction.text import TfidfVectorizer
-import nltk
-
-
-nltk.download("stopwords")
-
 
 
 
