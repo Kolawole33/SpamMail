@@ -14,7 +14,7 @@ from nltk.corpus import stopwords
 
 
 
-feature_extraction= TfidfVectorizer(min_df=1,stop_words="english",lowercase=True)
+feature_extraction= TfidfVectorizer()
 
 spam_mail= pickle.load(open("spam.sav","rb"))
 
@@ -49,7 +49,7 @@ def main():
     
     #creating a button for prediction
     if st.button("spam Result"):
-        spam= pred_spam([Message])
+        spam= pred_spam(str(Message))
         
     st.success(spam)
 
