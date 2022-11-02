@@ -23,7 +23,7 @@ port_stem= PorterStemmer()
 
 
 def pred_spam(content):
-    stemmed_content= feature_extraction.transform([content]).toarray()
+    stemmed_content= feature_extraction.fit_transform([content]).toarray()
 
     prediction= spam_mail.predict(stemmed_content)
     
