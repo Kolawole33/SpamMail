@@ -10,13 +10,16 @@ import pickle
 import string
 from nltk.corpus import stopwords
 import nltk
+from streamlit_option_menu import option_menu
 from nltk.stem.porter import PorterStemmer
 import re
-from streamlit_option_menu import option_menu
 
+ps = PorterStemmer()
 
 
 spam_mail= pickle.load(open("spam.sav","rb"))
+
+
 
 
 port_stem= PorterStemmer()
@@ -41,6 +44,7 @@ if (selected == 'Spam Mail Prediction System'):
     st.title('Spam Mail Prediction System using ML')
     
     Mail= st.text_input('Enter Mail Message')
+    
     #Message= st.text_input('Enter Mail Message')
     
     Mess= stemming(Mail)
