@@ -9,6 +9,10 @@ import streamlit as st
 import pickle
 from streamlit_option_menu import option_menu
 from sklearn.feature_extraction.text import TfidfVectorizer
+import nltk
+
+
+nltk.download("stopwords")
 
 
 
@@ -26,12 +30,12 @@ if (selected == 'Spam Mail Prediction System'):
     # page title
     st.title('Spam Mail Prediction System using ML')
     
-    #Mail= st.text_input('Enter Mail Message')
-    Message= st.text_input('Enter Mail Message')
+    Mail= st.text_input('Enter Mail Message')
+    #Message= st.text_input('Enter Mail Message')
     
-    #vectorizer= TfidfVectorizer(min_df=1,stop_words="english",lowercase=True)
+    vectorizer= TfidfVectorizer(lowercase=True)
     
-    #Message= vectorizer.fit_transform(Mail)
+    Message= vectorizer.fit_transform([Mail]).to_array()
     
     
     spam_mail_= ""
