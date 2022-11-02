@@ -1,65 +1,65 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Nov  1 10:55:13 2022
+Created on Tue Nov  1 10:55:10 2022
 
 @author: Kolawole Olanrewaju
 """
 
-import streamlit as st
 import pickle
-import string
-from nltk.corpus import stopwords
-import nltk
-from streamlit_option_menu import option_menu
+import streamlit as st
+from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.stem.porter import PorterStemmer
 import re
+from nltk.corpus import stopwords
 
+
+
+feature_extraction= TfidfVectorizer(min_df=1,stop_words="english",lowercase=True)
 
 spam_mail= pickle.load(open("spam.sav","rb"))
-tfidf = pickle.load(open('vectorizer.pkl','rb'))
-
 
 port_stem= PorterStemmer()
 
-def stemming(content):
+
+
+def pred_spam(content):
     stemmed_content = re.sub("[^a-zA-Z]"," ",content)
     stemmed_content= stemmed_content.lower()
     stemmed_content= stemmed_content.split()
     stemmed_content=[port_stem.stem(word) for word in stemmed_content if not word in stopwords.words("english")]
     stemmed_content=" ".join(stemmed_content)
-    return stemmed_content
+    
+    stemmed_content= feature_extraction.fit(stemmed_content)
+
+    prediction=spam_mail.predict(stemmed_content)
+    
+    if (prediction[0] == 0):
+       return " This Not Spam Mail"
+    else:
+        return "This Spam Mail"
 
 
-with st.sidebar:
-    selected= option_menu("Mail Prediction System",
-                          ["Spam Mail Prediction System"],
-                          icons=["activity"],
-                          default_index=0)
-   
-if (selected == 'Spam Mail Prediction System'):
-    # page title
-    st.title('Spam Mail Prediction System using ML')
+def main():
     
-    Mail= st.text_input('Enter Mail Message')
     
-    #Message= st.text_input('Enter Mail Message')
+    #giving title 
+    st.title('Spam Prediction Web App')
+    
+    #getting the input data from the user
+    
+    Message = st.text_input("Enter your Mail")
     
     
     
-    spam_mail_= ""
+    #code for prediction
+    spam= ''
     
-    if st.button('Mail Result'):
-        Mess= stemming(Mail)
-        vector_input = tfidf.transform([Mess])
+    #creating a button for prediction
+    if st.button("spam Result"):
+        spam= pred_spam([Message])
         
-        
-        
-        Spam_Mail_Prediction= spam_mail.predict([Mess])
-      
-        if (Spam_Mail_Prediction[0]==1):
-            spam_mail_="This Mail is Spam"
-        else:
-            spam_mail_="This Mail is Not Spam"
-          
-    st.success(spam_mail_)
-    
+    st.success(spam)
+
+
+if __name__== "__main__":
+    main()
