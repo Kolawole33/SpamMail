@@ -23,13 +23,7 @@ port_stem= PorterStemmer()
 
 
 def pred_spam(content):
-    for i in content:
-        n_content= i.lower()
-        n_content= n_content.split()
-        n_content=[port_stem.stem(word) for word in n_content if not word in stopwords.words("english")]
-        n_content=" ".join(n_content)
-    
-    stemmed_content= feature_extraction.transform(n_content).toarray()
+    stemmed_content= feature_extraction.transform([content]).toarray()
 
     prediction= spam_mail.predict(stemmed_content)
     
@@ -37,7 +31,6 @@ def pred_spam(content):
        return " This Not Spam Mail"
     else:
         return "This Spam Mail"
-
 
 def main():
     
@@ -56,7 +49,7 @@ def main():
     
     #creating a button for prediction
     if st.button("spam Result"):
-        spam= pred_spam([[Message]])
+        spam= pred_spam([Message])
         
     st.success(spam)
 
