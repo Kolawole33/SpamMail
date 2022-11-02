@@ -23,7 +23,7 @@ port_stem= PorterStemmer()
 
 
 def pred_spam(content):
-    stemmed_content = re.search("[^a-zA-Z]"," ",content)
+    stemmed_content = re.search("[^a-zA-Z]"," ",str(content))
     stemmed_content= stemmed_content.lower()
     stemmed_content= stemmed_content.split()
     stemmed_content=[port_stem.stem(word) for word in stemmed_content if not word in stopwords.words("english")]
