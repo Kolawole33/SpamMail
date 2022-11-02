@@ -14,12 +14,9 @@ from streamlit_option_menu import option_menu
 from nltk.stem.porter import PorterStemmer
 import re
 
-ps = PorterStemmer()
-
 
 spam_mail= pickle.load(open("spam.sav","rb"))
-
-
+tfidf = pickle.load(open('vectorizer.pkl','rb'))
 
 
 port_stem= PorterStemmer()
@@ -47,20 +44,22 @@ if (selected == 'Spam Mail Prediction System'):
     
     #Message= st.text_input('Enter Mail Message')
     
-    Mess= stemming(Mail)
-    
     
     
     spam_mail_= ""
     
     if st.button('Mail Result'):
-      Spam_Mail_Prediction= spam_mail.predict([Mess])
+        Mess= stemming(Mail)
+        vector_input = tfidf.transform([Mess])
+        
+        
+        
+        Spam_Mail_Prediction= spam_mail.predict([Mess])
       
-      if (Spam_Mail_Prediction[0]==1):
-          spam_mail_="This Mail is Spam"
-          
-      else:
-          spam_mail_="This Mail is Not Spam"
+        if (Spam_Mail_Prediction[0]==1):
+            spam_mail_="This Mail is Spam"
+        else:
+            spam_mail_="This Mail is Not Spam"
           
     st.success(spam_mail_)
     
